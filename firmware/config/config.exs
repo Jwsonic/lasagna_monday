@@ -28,9 +28,8 @@ config :logger, backends: [RingLogger]
 # See https://hexdocs.pm/nerves_firmware_ssh/readme.html for more information
 # on configuring nerves_firmware_ssh.
 
-key = Path.join(System.user_home!, ".ssh/id_rsa.pub")
-unless File.exists?(key), do:
-  Mix.raise("No SSH Keys found. Please generate an ssh key")
+key = Path.join(System.user_home!(), ".ssh/id_rsa.pub")
+unless File.exists?(key), do: Mix.raise("No SSH Keys found. Please generate an ssh key")
 
 config :nerves_firmware_ssh,
   authorized_keys: [
@@ -45,11 +44,24 @@ config :nerves_firmware_ssh,
 node_name = if Mix.env() != :prod, do: "lasagna_monday"
 
 config :nerves_init_gadget,
-  ifname: "usb0",
+  ifname: "wlan0",
   address_method: :dhcpd,
-  mdns_domain: "nerves.local",
+  mdns_domain: "lasagna.local",
   node_name: node_name,
   node_host: :mdns_domain
+
+config :nerves_network,
+  regulatory_domain: "US"
+
+config :nerves_network, :default,
+  wlan0: [
+    ssid: System.get_env("NERVES_NETWORK_SSID"),
+    psk: System.get_env("NERVES_NETWORK_PSK"),
+    key_mgmt: String.to_atom(System.get_env("NERVES_NETWORK_MGMT") || "WPA-PSK")
+  ],
+  eth0: [
+    ipv4_address_method: :dhcp
+  ]
 
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

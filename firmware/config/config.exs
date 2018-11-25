@@ -39,15 +39,13 @@ config :nerves_firmware_ssh,
 # Configure nerves_init_gadget.
 # See https://hexdocs.pm/nerves_init_gadget/readme.html for more information.
 
-# Setting the node_name will enable Erlang Distribution.
-# Only enable this for prod if you understand the risks.
-node_name = if Mix.env() != :prod, do: "lasagna_monday"
+device_name = System.get_env("NERVES_DEVICE_NAME")
 
 config :nerves_init_gadget,
   ifname: "wlan0",
   address_method: :dhcpd,
-  mdns_domain: "lasagna.local",
-  node_name: node_name,
+  mdns_domain: "#{device_name}.local",
+  node_name: device_name,
   node_host: :mdns_domain
 
 config :nerves_network,
@@ -62,6 +60,8 @@ config :nerves_network, :default,
   eth0: [
     ipv4_address_method: :dhcp
   ]
+
+config :phoenix, :json_library, Jason
 
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

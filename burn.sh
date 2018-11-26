@@ -6,7 +6,7 @@ fi
 
 source .env
 
-required_vars=("MIX_TARGET" "NERVES_NETWORK_SSID" "NERVES_NETWORK_PSK" "NERVES_DEVICE_NAME")
+required_vars=("MIX_TARGET" "NERVES_NETWORK_SSID" "NERVES_NETWORK_PSK" "NERVES_DEVICE_NAME" "SECRET_KEY_BASE")
 
 for var in "${required_vars[@]}" 
 do

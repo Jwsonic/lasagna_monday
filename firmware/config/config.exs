@@ -41,8 +41,11 @@ config :nerves_firmware_ssh,
 
 device_name = System.get_env("NERVES_DEVICE_NAME")
 
+config :lasagna,
+  device_name: String.to_atom(device_name)
+
 config :nerves_init_gadget,
-  ifname: "wlan0",
+  ifname: "usb0",
   address_method: :dhcpd,
   mdns_domain: "#{device_name}.local",
   node_name: device_name,
@@ -60,6 +63,16 @@ config :nerves_network, :default,
   eth0: [
     ipv4_address_method: :dhcp
   ]
+
+config :ui, UiWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 80],
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  root: Path.dirname(__DIR__),
+  server: true,
+  render_errors: [view: UiWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Nerves.PubSub, adapter: Phoenix.PubSub.PG2],
+  code_reloader: false
 
 config :phoenix, :json_library, Jason
 

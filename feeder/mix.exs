@@ -14,8 +14,8 @@ defmodule Feeder.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {Feeder.Application, []},
-      extra_applications: [:logger, :elixir_ale]
+      extra_applications: [:logger],
+      mod: {Feeder.Application, []}
     ]
   end
 

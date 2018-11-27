@@ -8,10 +8,8 @@ defmodule Feeder.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      %{
-        id: Feeder,
-        start: {Feeder, :start_link, [[]]}
-      }
+      # Starts a worker by calling: Feeder.Worker.start_link(arg)
+      # {Feeder.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

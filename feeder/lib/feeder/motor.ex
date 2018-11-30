@@ -8,6 +8,8 @@ defmodule Feeder.Motor do
 
   @pin 18
 
+  @one_rotation 7_000
+
   def start_link() do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
@@ -20,6 +22,10 @@ defmodule Feeder.Motor do
   def turn_for(time) when is_integer(time) and time > 0 do
     GenServer.call(__MODULE__, {:start, time})
   end
+
+  def turn_one_rotation(), do: turn_for(@one_rotation)
+
+  # Callbacks
 
   @impl true
   def init(_init) do

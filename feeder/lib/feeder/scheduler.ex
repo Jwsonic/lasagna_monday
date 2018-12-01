@@ -2,12 +2,12 @@ defmodule Feeder.Scheduler do
   use GenServer
 
   alias Feeder.Motor
-  alias Timex.Interval
 
   def start_link() do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
+  @impl true
   def init(_init) do
     schedule_for(~T[07:00:00])
     schedule_for(~T[12:00:00])
@@ -17,17 +17,18 @@ defmodule Feeder.Scheduler do
     {:ok, {}}
   end
 
-  def schedule_for(time) do
-    delay = next_time(time)
-    Process.send_after(__MODULE__, time, delay)
-  end
-
+  @impl true
   def handle_info(%Time{} = time, state) do
     Motor.turn_one_rotation()
 
     schedule_for(time)
 
     {:noreply, state}
+  end
+
+  def schedule_for(time) do
+    delay = next_time(time)
+    Process.send_after(__MODULE__, time, delay)
   end
 
   def next_time(%Time{} = time) do

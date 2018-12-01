@@ -13,15 +13,15 @@ defmodule Feeder.MixProject do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    Mix.env() |> apps()
+    Mix.env() |> app()
   end
 
-  defp apps(:prod) do
-    [mod: {Feeder.Application, []}, extra_applications: [:logger]]
-  end
-
-  defp apps(_) do
+  defp app(:test) do
     [extra_applications: [:logger]]
+  end
+
+  defp app(_) do
+    [mod: {Feeder.Application, []}, extra_applications: [:logger]]
   end
 
   # Run "mix help deps" to learn about dependencies.

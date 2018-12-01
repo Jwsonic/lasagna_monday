@@ -35,10 +35,12 @@ defmodule Feeder.Motor do
   end
 
   # We're already turning the motor, so skip this call
+  @impl true
   def handle_call({:start, _seconds}, _from, {_pid, 1} = state) do
     {:reply, {:error, "The feeder is already turning."}, state}
   end
 
+  @impl true
   def handle_call({:start, time}, _from, {pid, 0}) do
     :ok = GPIO.write(pid, 1)
 
@@ -48,8 +50,10 @@ defmodule Feeder.Motor do
   end
 
   # Stopping when we're stoped is a no-op
+  @impl true
   def handle_info(:stop, {pid, 0}), do: {:noreply, {pid, 0}}
 
+  @impl true
   def handle_info(:stop, {pid, 1}) do
     :ok = GPIO.write(pid, 0)
 

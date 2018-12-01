@@ -6,8 +6,17 @@ defmodule Feeder.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
-    children = [
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Feeder.Supervisor]
+
+    Application.get_env(:feeder, :env) |> children() |> Supervisor.start_link(opts)
+  end
+
+  defp children(:test), do: []
+
+  defp children(_env) do
+    [
       %{
         id: Feeder.Motor,
         start: {Feeder.Motor, :start_link, []}
@@ -17,10 +26,5 @@ defmodule Feeder.Application do
         start: {Feeder.Scheduler, :start_link, []}
       }
     ]
-
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Feeder.Supervisor]
-    Supervisor.start_link(children, opts)
   end
 end

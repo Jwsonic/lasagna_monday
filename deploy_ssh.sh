@@ -2,8 +2,4 @@
 
 source build.sh
 
-cd firmware
-
-mix firmware.burn
-
-cd ..
+source upload.sh

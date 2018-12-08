@@ -1,19 +1,17 @@
 defmodule SchedulerTest do
   use ExUnit.Case
 
+  import Crontab.CronExpression
+
   alias Feeder.Scheduler
 
-  @seven_am Timex.local() |> Timex.set(time: ~T[07:00:00])
-  @noon Timex.local() |> Timex.set(time: ~T[12:00:00])
-  @four_pm Timex.local() |> Timex.set(time: ~T[14:00:00])
+  describe "Scheduler" do
+    test "time_to_cron/1 returns the time as a daily crontab" do
+      assert Scheduler.time_to_cron(~T[07:00:00]) == ~e[0 0 7 *]e
 
-  test "next_time/2 gives time time today if it's in the future " do
-    assert Timex.equal?(Scheduler.next_time(~T[12:00:00], @seven_am), @noon)
-    assert Timex.equal?(Scheduler.next_time(~T[14:00:00], @noon), @four_pm)
-  end
+      assert Scheduler.time_to_cron(~T[12:30:00]) == ~e[0 30 12 *]e
 
-  test "next_time/2 gives the time tomorrow if it's in the past" do
-    assert Timex.equal?(Scheduler.next_time(~T[07:00:00], @noon), Timex.shift(@seven_am, days: 1))
-    assert Timex.equal?(Scheduler.next_time(~T[12:00:00], @four_pm), Timex.shift(@noon, days: 1))
+      assert Scheduler.time_to_cron(~T[16:25:11]) == ~e[11 25 16 *]e
+    end
   end
 end

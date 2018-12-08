@@ -56,7 +56,6 @@ defmodule LasagnaMonday.MixProject do
       {:feeder, path: "../feeder"},
       {:nerves_firmware_ssh, "~> 0.3"},
       {:nerves_uart, "~> 1.2"},
-      {:nerves_time, "~> 0.2"},
       {:jason, "~> 1.0"}
     ] ++ system(target)
   end

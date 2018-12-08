@@ -8,7 +8,7 @@ defmodule Feeder.Motor do
 
   @pin 18
 
-  @one_rotation 7_000
+  @one_rotation 9_000
 
   def start_link() do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)

@@ -47,9 +47,9 @@ config :lasagna,
 config :nerves_init_gadget,
   ifname: "usb0",
   address_method: :dhcpd,
-  mdns_domain: "#{device_name}.local",
+  mdns_domain: nil,
   node_name: device_name,
-  node_host: :mdns_domain
+  node_host: :ip
 
 config :nerves_network,
   regulatory_domain: "US"

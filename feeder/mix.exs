@@ -14,18 +14,25 @@ defmodule Feeder.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [:logger, :mix, :tzdata, :timex, :elixir_ale],
+      applications: [:logger] ++ apps(Mix.env()),
       mod: {Feeder.Application, []},
       extra_applications: [:logger]
     ]
   end
+
+  def apps(:test), do: [:timex]
+
+  def apps(_), do: [:tzdata, :timex, :elixir_ale, :nerves_time, :quantum]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:elixir_ale, "~> 1.2"},
       {:timex, "~> 3.0"},
-      {:tzdata, "~> 0.5.19"}
+      {:tzdata, "~> 0.5.19"},
+      {:nerves_time, "~> 0.2"},
+      {:crontab, "~> 1.1"},
+      {:quantum, "~> 2.3"}
     ]
   end
 end

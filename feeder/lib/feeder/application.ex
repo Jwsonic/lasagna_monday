@@ -24,6 +24,10 @@ defmodule Feeder.Application do
       %{
         id: Feeder.Scheduler,
         start: {Feeder.Scheduler, :start_link, []}
+      },
+      %{
+        id: Feeder.TimeSync,
+        start: {Feeder.TimeSync, :start_link, []}
       }
     ]
   end

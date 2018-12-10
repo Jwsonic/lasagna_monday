@@ -6,6 +6,8 @@ defmodule Feeder.Motor do
 
   alias ElixirALE.GPIO
 
+  require Logger
+
   @pin 18
 
   @one_rotation 9_000
@@ -42,6 +44,7 @@ defmodule Feeder.Motor do
 
   @impl true
   def handle_call({:start, time}, _from, {pid, 0}) do
+    Logger.info("Turning!")
     :ok = GPIO.write(pid, 1)
 
     Process.send_after(__MODULE__, :stop, time)

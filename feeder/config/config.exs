@@ -6,6 +6,9 @@ env = Mix.env()
 
 config :feeder, env: env
 
+config :logger,
+  level: :debug
+
 if env != :test do
   config :tzdata, :data_dir, "/root/elixir_tzdata_data"
 end

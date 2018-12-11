@@ -1,17 +1,17 @@
 defmodule SchedulerTest do
   use ExUnit.Case
 
-  import Crontab.CronExpression
-
   alias Feeder.Scheduler
 
   describe "Scheduler" do
-    test "time_to_cron/1 returns the time as a daily crontab" do
-      assert Scheduler.time_to_cron(~T[07:00:00]) == ~e[0 7 *]
+    test "schedules feedings at the proper time" do
+      hour_from_now =
+        Timex.local()
+        |> Timex.shift(hours: 1)
 
-      assert Scheduler.time_to_cron(~T[12:30:00]) == ~e[30 12 *]
+      {:noreply, state} = Scheduler.handle_info({:schedule, hour_from_now}, MapSet.new())
 
-      assert Scheduler.time_to_cron(~T[16:25:11]) == ~e[25 16 *]
+      assert MapSet.member?(state, hour_from_now)
     end
   end
 end

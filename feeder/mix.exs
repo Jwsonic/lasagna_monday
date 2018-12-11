@@ -22,7 +22,7 @@ defmodule Feeder.MixProject do
 
   def apps(:test), do: [:timex]
 
-  def apps(_), do: [:tzdata, :timex, :elixir_ale, :nerves_time, :quantum]
+  def apps(_), do: [:tzdata, :timex, :elixir_ale, :nerves_time]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
@@ -30,9 +30,7 @@ defmodule Feeder.MixProject do
       {:elixir_ale, "~> 1.2"},
       {:timex, "~> 3.0"},
       {:tzdata, "~> 0.5.19"},
-      {:nerves_time, "~> 0.2"},
-      {:crontab, "~> 1.1"},
-      {:quantum, "~> 2.3"}
+      {:nerves_time, "~> 0.2"}
     ]
   end
 end

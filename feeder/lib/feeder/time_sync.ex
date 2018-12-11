@@ -19,10 +19,12 @@ defmodule Feeder.TimeSync do
     {:ok, false}
   end
 
+  @impl true
   def handle_info(:check, true) do
     {:noreply, true}
   end
 
+  @impl true
   def handle_info(:check, false) do
     if Time.synchronized?() do
       schedule()

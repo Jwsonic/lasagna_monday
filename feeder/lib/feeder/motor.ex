@@ -8,11 +8,11 @@ defmodule Feeder.Motor do
 
   require Logger
 
-  @direction_a_pin 23
-  @direction_b_pin 24
+  @direction_a_pin 24
+  @direction_b_pin 23
   @pin 25
 
-  @one_rotation 2_500
+  @one_rotation 2_800
 
   def start_link() do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)

@@ -16,6 +16,8 @@ done
 echo "Building $NERVES_DEVICE_NAME!"
 
 cd ui
+
+mix deps.update --all
 mix deps.get
 mix compile
 cd assets
@@ -28,13 +30,14 @@ mix phx.digest
 
 cd ../feeder
 
+mix deps.update --all
 mix deps.get
 mix deps.compile
 
 cd ../firmware
 
-mix deps.get
 mix deps.update --all
+mix deps.get
 mix firmware
 
 cd ..

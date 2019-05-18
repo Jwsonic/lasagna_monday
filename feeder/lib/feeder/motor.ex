@@ -8,9 +8,11 @@ defmodule Feeder.Motor do
 
   require Logger
 
-  @pin 18
+  @direction_a_pin 23
+  @direction_b_pin 24
+  @pin 25
 
-  @one_rotation 9_000
+  @one_rotation 2_500
 
   def start_link() do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -31,6 +33,8 @@ defmodule Feeder.Motor do
 
   @impl true
   def init(_init) do
+    {:ok, _} = GPIO.start_link(@direction_a_pin, :output, start_value: 1)
+    {:ok, _} = GPIO.start_link(@direction_b_pin, :output, start_value: 0)
     {:ok, pid} = GPIO.start_link(@pin, :output, start_value: 0)
 
     {:ok, {pid, 0}}
